@@ -38,7 +38,7 @@ else:
     
     DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['artgallery-yyxu.onrender.com', 'localhost', '127.0.0.1']
 
 
 
