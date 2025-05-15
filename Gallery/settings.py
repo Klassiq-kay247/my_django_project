@@ -38,9 +38,9 @@ else:
     
     DEBUG = False
 
-ALLOWED_HOSTS = [ 'localhost', '127.0.0.1', 'gallery-art.up.railway.app' ]
+ALLOWED_HOSTS = []
 
-CSRF_TRUSTED_ORIGINS = [ 'https://gallery-art.up.railway.app' ]
+
 
 
 
