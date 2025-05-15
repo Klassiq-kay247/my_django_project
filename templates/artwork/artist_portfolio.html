@@ -1,0 +1,21 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+<!-- artist_portfolio.html -->
+
+
+
+<div class="content">
+    {% for portfolio in portfolios %}
+        <div class="item">
+            <h2>{{ portfolio.title }}</h2>
+			{% if  portfolio.images %}
+            <img src="{{ portfolio.images.url }}" alt="Portfolio Image">
+			{% else %}
+			
+			{% endif %}
+            <div class="entry-content editor-content">{{ portfolio.description|safe }}</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

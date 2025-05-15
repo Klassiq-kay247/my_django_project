@@ -1,0 +1,22 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="content">
+    {% for resume in resumes %}
+        <div class="item">
+            <h2>{{ resume.title }}</h2>
+			{% if resume.images %}
+            <img src="{{ resume.images.url }}" alt="Resume Image">
+			{% else %}
+
+			{% endif %}
+
+            <div class="entry-content editor-content">{{ resume.description|safe }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

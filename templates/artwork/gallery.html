@@ -1,0 +1,228 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="ftco-section" style="background: white; padding-top: 50px;">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading mb-2" style="color: #FF6F61; font-weight: bold; font-family: 'Poppins', sans-serif;">Our Gallery</span>
+                <h2 class="mb-4" style="font-family: 'Roboto', sans-serif; color: #2c3e50;">Explore Our Art Collection</h2>
+            </div>
+        </div>
+
+        <div class="card-deck">
+            {% for gallery in galleries %}
+            <div class="col-md-4 mb-4">
+                <div class="card gallery-card">
+                    <div class="img-container" onclick="openImageModal('{{ gallery.image.url }}', {{ gallery.id }})">
+                        <img src="{{ gallery.image.url }}" class="card-img-top gallery-img" alt="{{ gallery.title }}">
+                        <div class="overlay">
+                            <span class="view-text">Click to View</span>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ gallery.title }}</h5>
+                        {% if gallery.description %}
+                        <p class="card-text">{{ gallery.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Modal for Image Gallery -->
+<div id="imageModal" class="modal">
+    <span class="modal-close" onclick="closeImageModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <button class="gallery-nav prev" onclick="changeImage(-1)">❮</button>
+    <button class="gallery-nav next" onclick="changeImage(1)">❯</button>
+</div>
+
+<style>
+.gallery-card {
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-5px);
+}
+
+.img-container {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.view-text {
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.img-container:hover .overlay {
+    opacity: 1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 50px;
+    overflow: hidden;
+}
+
+.modal-content {
+    max-width: 80%;
+    max-height: 80vh;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.modal-close {
+    position: fixed;
+    right: 25px;
+    top: 15px;
+    color: #fff;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+    transition: color 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.modal-close:hover {
+    color: #ff4444;
+}
+
+.gallery-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.gallery-nav:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev {
+    left: 25px;
+}
+
+.next {
+    right: 25px;
+}
+
+/* Add responsive adjustments */
+@media (max-width: 768px) {
+    .modal {
+        padding: 20px;
+    }
+
+    .modal-content {
+        max-width: 95%;
+    }
+
+    .gallery-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
+</style>
+
+<script>
+let currentImageIndex = 0;
+const images = [{% for gallery in galleries %}'{{ gallery.image.url }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+function openImageModal(imgUrl) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    modal.style.display = "block";
+    modalImg.src = imgUrl;
+    currentImageIndex = images.indexOf(imgUrl);
+}
+
+function closeImageModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
+
+function changeImage(direction) {
+    currentImageIndex = (currentImageIndex + direction + images.length) % images.length;
+    document.getElementById("modalImage").src = images[currentImageIndex];
+}
+
+// Close modal when clicking outside the image
+document.getElementById("imageModal").addEventListener("click", function(e) {
+    if (e.target === this) {
+        closeImageModal();
+    }
+});
+
+// Keyboard navigation
+document.addEventListener("keydown", function(e) {
+    if (document.getElementById("imageModal").style.display === "block") {
+        if (e.key === "ArrowLeft") changeImage(-1);
+        if (e.key === "ArrowRight") changeImage(1);
+        if (e.key === "Escape") closeImageModal();
+    }
+});
+</script>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+<!-- artist_statement.html -->
+
+
+
+<div class="content">
+    {% for statement in statements %}
+        <div class="item">
+            <h2>{{ statement.title }}</h2>
+			{% if statement.images %}
+            <img src="{{ statement.images.url }}" alt="Statement Image">
+			{% else %}
+			{% endif %}
+
+            <div class="entry-content editor-content">{{ statement.description|safe }}</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

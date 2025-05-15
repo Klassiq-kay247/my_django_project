@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/blog-grid-sidebar.html  22 Nov 2019 10:04:23 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Artwork Gallery</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/icons/new logo.jpg' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/icons/new logo.jpg' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/icons/new logo.jpg' %}">
+    <link rel="manifest" href="{% static 'assets/images/icons/site.html' %}">
+    <link rel="mask-icon" href="{% static 'assets/images/icons/safari-pinned-tab.svg' %}" color="#666666">
+    <link rel="shortcut icon" href="{% static 'assets/images/icons/new logo.jpg' %}">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="{% static 'assets/images/icons/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/owl-carousel/owl.carousel.css' %}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style1.css' %}">
+</head>
+
+<body>
+
+    <style>
+        .header-left a,
+        .login a {
+            color: #2504fb;
+
+            /* Change to your desired color */
+            font-weight: bold;
+            font-size: 16px;
+
+
+            /* Add slight boldness */
+        }
+    </style>
+
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left">
+                        <a href="tel:#"><i class="icon-phone"></i>Call: +234 7066 520 464</a>
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Account</a>
+                                <ul>
+                                    <li>
+
+                                    </li>
+                                    <li>
+
+                                    </li>
+                                    {% if request.user.is_authenticated %}
+                                    <li class="login">
+                                        <a href="{% url 'userauths:sign-out' %}">Sign out/Sign in</a>
+                                    </li>
+                                    <br>
+                                    {% else %}
+                                    <li class="login">
+                                        <a href="{% url 'userauths:sign-in' %}">Sign in</a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="{% url 'artwork:artwork' %}" class="logo">
+                            <img src="{% static 'assets/images/Preview (3)--------new logo.jpg' %}" alt="Molla Logo" width="105" height="25">
+                        </a>
+
+
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+        </header><!-- End .header -->
+        
+
+        {% block content %} {% endblock content %}
+
+
+
+        <footer class="footer">
+            <div class="footer-middle">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget widget-about">
+                                <img src="{% static 'assets/images/Preview (3)--------new logo.jpg' %}" class="footer-logo" alt="Footer Logo"
+                                    width="105" height="25">
+
+
+                                <div class="social-icons">
+                                    <a href="#" class="social-icon" target="_blank" title="Facebook"><i
+                                            class="icon-facebook-f"></i></a>
+                                    <a href="#" class="social-icon" target="_blank" title="Twitter"><i
+                                            class="icon-twitter"></i></a>
+                                    <a href="#" class="social-icon" target="_blank" title="Instagram"><i
+                                            class="icon-instagram"></i></a>
+                                    <a href="#" class="social-icon" target="_blank" title="Youtube"><i
+                                            class="icon-youtube"></i></a>
+                                    <a href="#" class="social-icon" target="_blank" title="Pinterest"><i
+                                            class="icon-pinterest"></i></a>
+                                </div><!-- End .soial-icons -->
+                            </div><!-- End .widget about-widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget">
+                                <h4 class="widget-title">Links</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+
+
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="{% url 'artwork:contact' %}">Contact us</a></li>
+
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget">
+                                <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+                                    {% if request.user.is_authenticated %}
+                                    <li class="login">
+                                        <a href="{% url 'userauths:sign-out' %}">Sign out/Sign in</a>
+                                    </li>
+                                    <br>
+                                    {% else %}
+                                    <li class="login">
+                                        <a href="{% url 'userauths:sign-in' %}">Sign in</a>
+                                    </li>
+                                    {% endif %}
+
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .footer-middle -->
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <p class="footer-copyright">Copyright © 2024 Israel Kayode. All Rights Reserved.</p>
+                    <!-- End .footer-copyright -->
+
+                </div><!-- End .container -->
+            </div><!-- End .footer-bottom -->
+        </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+
+
+            <nav class="mobile-nav">
+                <ul class="mobile-menu">
+                    <li class="active">
+                        <a href="{% url 'artwork:artwork' %}">Home</a>
+                        <a href="{% url 'artwork:contact' %}">Contact</a>
+
+                    </li>
+
+                </ul>
+            </nav><!-- End .mobile-nav -->
+
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+
+                <a href="https://www.artsy.net/artist/george-egunjobi" class="social-icon" target="_blank"
+                    title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="https://l.instagram.com/?u=https%3A%2F%2Fwww.artsy.net%2Fartist%2Fgeorge-egunjobi&e=AT3Iu2zD0rcJdh5aJG5sp6Dmdvjn9gyQUW6Q22zzjK7eVb87VnVIJSN3OYJAbRZPTzQXvJJxJe7YiZRY_fJjafzkPTXXxTcOpHQGrQI"
+                    class="social-icon" target="_blank" title="shopping-cart"><i class="icon-shopping-cart"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+
+    <!-- Sign in / Register Modal -->
+
+
+    <!-- Plugins JS File -->
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.hoverIntent.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/superfish.min.js' %}"></script>
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/js/isotope.pkgd.min.js' %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/js/function.js' %}"></script>
+</body>
+
+
+<!-- molla/blog-grid-sidebar.html  22 Nov 2019 10:04:23 GMT -->
+</html>

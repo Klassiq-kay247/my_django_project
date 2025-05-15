@@ -1,0 +1,208 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="main">
+    <div class="page-header text-center" style="background-image: url({% static 'assets/images/page-header-bg.jpg'%})">
+        <div class="container">
+
+            <h1 class="page-title">George Egunjobi<span></span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+        <div class="container">
+            <ol class="breadcrumb">
+
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <style>
+        /* Breadcrumb Navigation */
+        .breadcrumb-nav {
+            background-color: #f8f9fa;
+            /* Light background for the breadcrumb */
+            padding: 10px 0;
+            /* Padding for the breadcrumb navigation */
+        }
+
+        .breadcrumb-nav .container {
+            max-width: 1200px;
+            /* Set a maximum width for the container */
+            margin: 0 auto;
+            /* Center the container */
+        }
+
+        .breadcrumb {
+            display: flex;
+            /* Use flexbox for the breadcrumb list */
+            list-style: none;
+            /* Remove default list styling */
+            padding: 0;
+            /* No extra padding */
+            margin: 0;
+            /* No extra margin */
+            justify-content: flex-start;
+            /* Align items to the start */
+            font-size: 16px;
+            /* Set a default font size */
+            gap: 10px;
+            /* Space between list items */
+        }
+
+        .breadcrumb li {
+            display: inline;
+            /* Display list items inline */
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+            /* Remove underline from links */
+            color: #007bff;
+            /* Bootstrap blue color for links */
+            padding: 5px 10px;
+            /* Padding for links */
+            transition: color 0.3s;
+            /* Smooth transition for hover effect */
+        }
+
+        .breadcrumb a:hover {
+            color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        .breadcrumb li::after {
+
+            /* Separator between breadcrumb items */
+            color: #999;
+            /* Light gray color for the separator */
+            padding: 0 5px;
+            /* Padding around the separator */
+        }
+
+        .breadcrumb li:last-child::after {
+            content: '';
+            /* Remove the separator for the last item */
+        }
+
+        /* Mobile responsiveness */
+        @media only screen and (max-width: 768px) {
+            .breadcrumb {
+                flex-direction: column;
+                /* Change to column layout on small screens */
+                gap: 5px;
+                /* Reduce space between items */
+            }
+
+            .breadcrumb a {
+                font-size: 14px;
+                /* Smaller font size for mobile */
+                padding: 3px 7px;
+                /* Reduced padding for mobile */
+            }
+
+            .breadcrumb li::after {
+                content: '';
+                /* No separator on mobile */
+            }
+        }
+    </style>
+
+    <div class="page-content">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+                <div class="container">
+                    <ol class="breadcrumb">
+
+                        <li><a href="{% url 'artwork:artist_bio' %}">Artist bio</a></li>
+                        <li><a href="{% url 'artwork:resume' %}">Resum with details</a></li>
+                        <li><a href="{% url 'artwork:artist_statement' %}">Artist statement</a></li>
+                        <li><a href="{% url 'artwork:artist_portfolio' %}">Artist portfolio</a></li>
+                        <li><a href="{% url 'artwork:gallery' %}">Art Gallery</a></li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="entry-container" data-layout="fitRows">
+                {% for p in posts %}
+                <div class="entry-item lifestyle shopping col-sm-6 col-lg-4">
+                    <article class="entry entry-mask">
+                        <figure class="entry-media">
+                            <a href="{% url 'artwork:artwork-detail' p.pid %}">
+                                <img src="{{ p.image.url }}" alt="image desc">
+                            </a>
+                        </figure><!-- End .entry-media -->
+
+                        <div class="entry-body">
+                            <div class="entry-meta">
+                                <a href="#">{{ p.date_created|date:"d M, Y" }}</a>
+                                <span class="meta-separator">|</span>
+                                <a href="#">{{ p.comments.count }}</a>
+                            </div><!-- End .entry-meta -->
+
+                            <h2 class="entry-title">
+                                <a href="{% url 'artwork:artwork-detail' p.pid %}">{{ p.title }}</a>
+                            </h2><!-- End .entry-title -->
+
+
+                        </div><!-- End .entry-body -->
+
+                    </article><!-- End .entry -->
+
+                </div><!-- End .entry-item -->
+                {% endfor %}
+
+            </div><!-- End .entry-container -->
+
+            <div class="mb-3"></div><!-- End .mb-3 -->
+
+            <!-- Display the posts on the current page -->
+            {% for post in page.object_list %}
+            <!-- Your post rendering code -->
+            {% endfor %}
+
+            <!-- Pagination Navigation 
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if page.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link page-link-prev" href="?page={{ page.previous_page_number }}"
+                            aria-label="Previous">
+                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span> Prev
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link page-link-prev" aria-label="Previous" aria-disabled="true">
+                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span> Prev
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    
+                    {% for i in page.paginator.page_range %}
+                    <li class="page-item {% if page.number == i %} active {% endif %}">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                    {% endfor %}
+
+                    {% if page.has_next %}
+                    <li class="page-item">
+                        <a class="page-link page-link-next" href="?page={{ page.next_page_number }}" aria-label="Next">
+                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link page-link-next" aria-disabled="true" aria-label="Next">
+                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>-->
+
+        </div><!-- End .container -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+{% endblock content %}

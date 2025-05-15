@@ -1,0 +1,28 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+<!-- artist_bio.html -->
+
+<div class="page-content">
+    <div class="container">
+        <div class="content">
+            {% for bio in bios %}
+                <div class="item">
+                    <h2 class="bio-title">{{ bio.title }}</h2>
+                    {% if bio.images %}
+                        <img class="bio-image" src="{{ bio.images.url }}" alt="Bio Image">
+                    {% else %}
+                        <div class="no-image">No image available</div>
+                    {% endif %}
+                    <div class="entry-content editor-content">{{ bio.description|safe }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+			{% for p in posts %}
+			<div class="col-lg-9">
+				<article class="entry">
+					<figure class="entry-media">
+						<a href="{% url 'artwork:artwork-detail' p.pid %}">
+							<img src="{{ p.image.url }}" alt="image desc">
+						</a>
+					</figure><!-- End .entry-media -->
+
+					<div class="entry-body">
+						<div class="entry-meta">
+							<span class="entry-author">
+								by <a href="#">{{ post.user.username }}</a>
+							</span>
+							<span class="meta-separator">|</span>
+							<a href="#">{{ p.date_created|date:"d M, Y" }}</a>
+							<span class="meta-separator">|</span>
+							<a href="#">{{ p.comments.count }}</a>
+						</div><!-- End .entry-meta -->
+
+						<h2 class="entry-title">
+							<a href="{% url 'artwork:artwork-detail' p.pid %}">{{ p.title }}</a>
+						</h2><!-- End .entry-title -->
+
+						<div class="entry-cats">
+							in <a href="#">Lifestyle</a>,
+							<a href="#">Shopping</a>
+						</div><!-- End .entry-cats -->
+
+						<div class="entry-content">
+							<p>{{ p.subtitle|truncatechars:150 }}</p>
+							<a href="{% url 'artwork:artwork-detail' p.pid %}" class="read-more">Continue Reading</a>
+						</div><!-- End .entry-content -->
+					</div><!-- End .entry-body -->
+					{% endfor  %}
+				</article><!-- End .entry -->
+
+{% endblock content %}
