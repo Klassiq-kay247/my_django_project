@@ -40,7 +40,11 @@ else:
 
 ALLOWED_HOSTS = ['artgallery-yyxu.onrender.com', 'localhost', '127.0.0.1']
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://artgallery-yyxu.onrender.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
 
 
 
@@ -153,14 +157,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_URL = "media/"
+MEDIA_URL = '/media/'
 
 
 
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-else:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': env('CLOUD_NAME'),
