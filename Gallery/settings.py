@@ -39,9 +39,21 @@ else:
     
     DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://artgallery-zee7.onrender.com']
+ALLOWED_HOSTS = [
+    'localhost', 
+    '127.0.0.1', 
+    'artgallery-zee7.onrender.com',  # Remove https:// from here
+    '.onrender.com'  # Allow all subdomains on render
+]
 
-CSRF_TRUSTED_ORIGINS = [ 'https://artgallery-zee7.onrender.com' ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://artgallery-zee7.onrender.com',
+    'https://*.onrender.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000'
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 INTERNAL_IPS = (
     '127.0.0.1',
@@ -66,12 +78,14 @@ INSTALLED_APPS = [
     'userauths',
     'taggit',
     'ckeditor',
+    'corsheaders',
     
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
