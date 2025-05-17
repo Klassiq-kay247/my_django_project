@@ -6,8 +6,6 @@ from taggit.managers import TaggableManager
 from shortuuid.django_fields import ShortUUIDField
 from django.core.validators import FileExtensionValidator
 from django.utils.translation import gettext_lazy as _
-from cloudinary.models import CloudinaryField
-
 
 STATUS = (
 	("draft", "Draft"),
@@ -63,19 +61,20 @@ class PostImages(models.Model):
 		verbose_name_plural = 'Post Images'
   
 class PostVideo(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    video = CloudinaryField(
-        'video',
-        resource_type='video',
-        folder='gallery_videos/',
-        allowed_formats=['mp4', 'webm', 'mov'],
-        transformation={
-            'quality': 'auto',
-            'fetch_format': 'auto'
-        }
+    video = models.FileField(
+        verbose_name=_("Video File"),
+        upload_to="post-videos",
+        max_length=100,
+        help_text=_("Upload video file (supported formats: MOV, AVI, MP4, WEBM, MKV)"),
+        validators=[FileExtensionValidator(allowed_extensions=[
+            'mov', 'avi', 'mp4', 'webm', 'mkv'
+        ])],
+        null=True,  # Add this to make it optional
+        blank=True  # Add this to make it optional
     )
+    post = models.ForeignKey(Post, related_name="p_videos", on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(auto_now_add=True)
-
+    
     class Meta:
         verbose_name_plural = 'Post Videos'
 		
