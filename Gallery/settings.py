@@ -196,6 +196,11 @@ CLOUDINARY_STORAGE = {
     'CLOUDINARY_URL': env('CLOUDINARY_URL')
 }
 
+# File upload settings
+FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50MB
+CLOUDINARY_TIMEOUT = 600  # 10 minutes timeout for large uploads
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

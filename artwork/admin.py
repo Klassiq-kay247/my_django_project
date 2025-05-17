@@ -3,6 +3,13 @@ from artwork.models import Post, Category, Comment, Footer, FooterGalleryImage, 
 
 class PostVideoAdmin(admin.TabularInline):
     model = PostVideo
+    extra = 1
+    max_num = 3  # Limit number of videos
+    classes = ['collapse']  # Makes the video section collapsible
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs[:3]  # Limit query to 3 videos
 
 class PostImagesAdmin(admin.TabularInline):
 	model = PostImages
