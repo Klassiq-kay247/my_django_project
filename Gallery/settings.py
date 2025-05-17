@@ -18,6 +18,7 @@ from environ import Env
 env = Env()
 Env.read_env()
 ENVIRONMENT = env('ENVIRONMENT', default='production')
+ENVIRONMENT = "production"
 
 
 
@@ -32,15 +33,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if ENVIRONMENT == 'development':
+    DEBUG = True
+else:
+    
+    DEBUG = False
 
 ALLOWED_HOSTS = ['artgallery-yyxu.onrender.com', 'localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://artgallery-yyxu.onrender.com',
-    'http://localhost:8000',
-    'http://127.0.0.1:8000',
-]
+INTERNAL_IPS = (
+    '127.0.0.1',
+    'localhost:8000',
+)
+
 
 
 
@@ -97,12 +102,18 @@ WSGI_APPLICATION = 'Gallery.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if ENVIRONMENT == 'development':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
 
 
 POSTGRES_LOCALLY = False
@@ -153,17 +164,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "media/"
 
 
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': env('CLOUD_NAME'),
     'API_KEY': env('CLOUD_API_KEY'),
-    'API_SECRET': env('CLOUD_API_SECRET')
+    'API_SECRET': env('CLOUD_API_SECRET'),
+    'CLOUDINARY_URL': env('CLOUDINARY_URL')
 }
 
 # Default primary key field type
