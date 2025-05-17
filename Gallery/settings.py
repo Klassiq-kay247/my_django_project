@@ -39,7 +39,9 @@ else:
     
     DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://artgallery-zee7.onrender.com']
+
+CSRF_TRUSTED_ORIGINS = [ 'https://artgallery-zee7.onrender.com' ]
 
 INTERNAL_IPS = (
     '127.0.0.1',
